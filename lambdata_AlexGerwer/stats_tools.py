@@ -37,17 +37,19 @@ class  Stats:
             possible_mode, next_highest = counter.most_common(2)
             if possible_mode[1] > next_highest[1]:
                 self.mode_value = possible_mode[0]
-                return mode_value
+                return self.mode_value
         self.mode_value = np.nan
         return self.mode_value
 
     def stat_variance(self):
         self_data_array = np.array(self.data)
-        self.variance_value = ((self_data_array - self.stat_mean())**2).sum() / len(self_data_array)
+        self.variance_value = ((self_data_array - self.stat_mean())**2).sum() / (len(self_data_array) - 1)
         return self.variance_value
 
     def stat_standard_deviation(self):
-        self.standard_deviation_value = self.variance_value**(0.5)
+        self_data_array = np.array(self.data)
+        variance_value = ((self_data_array - self.stat_mean())**2).sum() / (len(self_data_array) - 1)
+        self.standard_deviation_value = variance_value**(0.5)
         return self.standard_deviation_value
 
     def stat_coefficient_of_variation(self):
